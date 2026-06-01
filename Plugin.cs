@@ -223,7 +223,7 @@ namespace ValheimRcon
 
                 var name = ServerChatName.Value;
                 var relaySource = default(ZNet.PlayerInfo);
-                var relayEnabled = EnableSoloChatRelay.Value && TryGetSoloChatRelaySource(__instance.m_players, out relaySource);
+                var relayEnabled = EnableSoloChatRelay.Value && TryGetChatRelaySource(__instance.m_players, out relaySource);
                 var userId = CommandsUserInfo.UserId;
                 if (relayEnabled)
                 {
@@ -247,21 +247,19 @@ namespace ValheimRcon
                 __instance.m_players.Add(playerInfo);
             }
 
-            private static bool TryGetSoloChatRelaySource(List<ZNet.PlayerInfo> players, out ZNet.PlayerInfo relaySource)
+            private static bool TryGetChatRelaySource(List<ZNet.PlayerInfo> players, out ZNet.PlayerInfo relaySource)
             {
-                var validPlayerCount = 0;
-                relaySource = default;
-
                 foreach (var player in players)
                 {
                     if (player.m_characterID != ZDOID.None && player.m_userInfo.m_id.IsValid)
                     {
                         relaySource = player;
-                        validPlayerCount++;
+                        return true;
                     }
                 }
 
-                return validPlayerCount == 1;
+                relaySource = default;
+                return false;
             }
         }
     }
