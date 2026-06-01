@@ -27,7 +27,7 @@ Build:
 dotnet build ValheimRcon.csproj
 ```
 
-The built DLL is written to `bin/Debug/` or `bin/Release/`. The `IPNetwork` dependency is restored through NuGet and copied to the build output.
+The built DLL is written to `bin/Debug/` or `bin/Release/`. The `IPNetwork` dependency is restored through NuGet and merged into `ValheimRcon.dll` with ILRepack.
 
 # Usage
 1. Install the plugin to your Valheim server
