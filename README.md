@@ -11,6 +11,24 @@ This plugin adds RCON protocol support to your Valheim server.
 	- Empty password protection (plugin disabled if password is empty)
 	- Automatic disconnection of unauthorized clients
 
+# Development
+
+This fork uses the same macOS-friendly SDK-style build setup as `valheimModTemplateMacOS`.
+
+Prerequisites:
+- .NET SDK 8.0+
+- Valheim installed through Steam
+- BepInEx installed in the Valheim folder
+- publicized Valheim assemblies in `Valheim.app/Contents/Resources/Data/Managed/publicized_assemblies`
+
+Build:
+
+```bash
+dotnet build ValheimRcon.csproj
+```
+
+The built DLL is written to `bin/Debug/` or `bin/Release/`. The `IPNetwork` dependency is restored through NuGet and copied to the build output.
+
 # Usage
 1. Install the plugin to your Valheim server
 2. Start the server to generate the configuration file
@@ -81,4 +99,4 @@ If you are a mod developer and want to add your own RCON commands for your serve
 You can also extend object information display by registering custom ZDO info providers via `ZDOInfoUtil.RegisterInfoProvider()`.
 
 # Contacts
-If you have any questions / bug reports / suggestions for improvement or found incompatibility with another mod, feel free to contact me in discord `typedeff` or on GitHub 
+If you have any questions / bug reports / suggestions for improvement or found incompatibility with another mod, feel free to contact me in discord `typedeff` or on GitHub
