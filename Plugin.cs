@@ -25,11 +25,14 @@ namespace ValheimRcon
 
         private const int MaxDiscordMessageLength = 1900;
         private const int TruncatedMessageLength = 200;
+        private const long ChatRelayPeerId = -775000000000001L;
+        private const uint ChatRelayZdoId = 1U;
 
         public static ConfigEntry<string> DiscordUrl;
         public static ConfigEntry<string> Password;
         public static ConfigEntry<int> Port;
         public static ConfigEntry<string> ServerChatName;
+        public static ConfigEntry<bool> EnableSoloChatRelay;
 
         private static ConfigEntry<string> WhiteListConfig;
         private static ConfigEntry<string> BlackListConfig;
@@ -60,6 +63,8 @@ namespace ValheimRcon
             BlackListConfig = Config.Bind("1. Rcon", "Blacklist IP mask", "", "Comma-separated list of IP addresses or masks (e.g., 192.168.1.0/24, 10.0.0.1)");
             DiscordUrl = Config.Bind("2. Discord", "Webhook url", "", "Discord webhook for sending command results");
             ServerChatName = Config.Bind("3. Chat", "Server name", "Server", "Name of server to display messages sent with rcon command");
+            EnableSoloChatRelay = Config.Bind("3. Chat", "Enable solo chat relay", true,
+                "Adds a synthetic character id to the RCON player-list entry so RCON say commands are routed through the server when at least one real player is online. [Server restart required for update]");
 
             DiscordSecurityReportPrefix = Config.Bind("4. Security", "Message prefix", "@here Security alert", "Prefix attached to every security report");
             DiscordSecurityUrl = Config.Bind("4. Security", "Webhook url", "", "Discord webhook for sending security reports");
@@ -217,13 +222,44 @@ namespace ValheimRcon
                     return;
 
                 var name = ServerChatName.Value;
+                var relaySource = default(ZNet.PlayerInfo);
+                var relayEnabled = EnableSoloChatRelay.Value && TryGetChatRelaySource(__instance.m_players, out relaySource);
+                var userId = CommandsUserInfo.UserId;
+                if (relayEnabled)
+                {
+                    userId = relaySource.m_userInfo.m_id;
+                }
+
                 var playerInfo = new ZNet.PlayerInfo
                 {
                     m_name = name,
-                    m_userInfo = new ZNet.CrossNetworkUserInfo { m_displayName = name, m_id = CommandsUserInfo.UserId },
+                    m_userInfo = new ZNet.CrossNetworkUserInfo
+                    {
+                        m_displayName = name,
+                        m_id = userId,
+                    },
                     m_serverAssignedDisplayName = name,
                 };
+                if (relayEnabled)
+                {
+                    playerInfo.m_characterID = new ZDOID(ChatRelayPeerId, ChatRelayZdoId);
+                }
                 __instance.m_players.Add(playerInfo);
+            }
+
+            private static bool TryGetChatRelaySource(List<ZNet.PlayerInfo> players, out ZNet.PlayerInfo relaySource)
+            {
+                foreach (var player in players)
+                {
+                    if (player.m_characterID != ZDOID.None && player.m_userInfo.m_id.IsValid)
+                    {
+                        relaySource = player;
+                        return true;
+                    }
+                }
+
+                relaySource = default;
+                return false;
             }
         }
     }
