@@ -236,9 +236,9 @@ namespace ValheimRcon
                     m_userInfo = new ZNet.CrossNetworkUserInfo
                     {
                         m_displayName = name,
+                        m_serverAssignedDisplayName = name,
                         m_id = userId,
                     },
-                    m_serverAssignedDisplayName = name,
                 };
                 if (relayEnabled)
                 {
