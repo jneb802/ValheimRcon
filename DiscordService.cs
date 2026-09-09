@@ -43,10 +43,9 @@ namespace ValheimRcon
                 }
                 else
                 {
-                    var fileName = Path.GetFileName(filePath);
-                    var fileExtension = Path.GetExtension(filePath);
+                    string fileName = Path.GetFileName(filePath);
 
-                    Discord.SendFile(message.text, fileName, fileExtension, filePath, Name, message.url);
+                    Discord.SendFile(message.text, fileName, filePath, Name, message.url);
                 }
 
                 Log.Debug($"Sent to discord (symbols:{message.text.Length})");
