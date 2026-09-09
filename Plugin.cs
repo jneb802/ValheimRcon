@@ -238,6 +238,7 @@ namespace ValheimRcon
                         m_displayName = name,
                         m_serverAssignedDisplayName = name,
                         m_id = userId,
+                        m_playfabId = string.Empty,
                     },
                 };
                 if (relayEnabled)
