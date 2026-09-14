@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandArgsTests.cs" />
+    <Compile Include="PlayerUtilsTests.cs" />
     <Compile Include="Core\RconPacketTests.cs" />
     <Compile Include="Core\RconCommandReceiverTests.cs" />
     <Compile Include="MockLogSource.cs" />

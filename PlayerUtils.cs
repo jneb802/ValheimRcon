@@ -23,6 +23,19 @@ namespace ValheimRcon
 
         public static long GetPlayerId(this ZNetPeer peer) => peer.GetZDO()?.GetLong(ZDOVars.s_playerID) ?? 0L;
 
+        public static string GetPlayerNameAndId(long playerId)
+        {
+            ZNetPeer peer = ZNet.instance?.m_peers.Find(candidate => candidate.GetPlayerId() == playerId);
+            return FormatPlayerNameAndId(playerId, peer?.m_playerName);
+        }
+
+        public static string FormatPlayerNameAndId(long playerId, string playerName)
+        {
+            return string.IsNullOrWhiteSpace(playerName)
+                ? playerId.ToString()
+                : $"{playerName} ({playerId})";
+        }
+
         public static void WritePlayerInfo(this ZNetPeer peer, StringBuilder sb)
         {
             sb.AppendFormat("{0} Steam ID:{1}", peer.m_playerName, peer.GetSteamId());
