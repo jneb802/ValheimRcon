@@ -63,7 +63,7 @@ namespace ValheimRcon
         {
             HttpClient client = new HttpClient();
             client.Timeout = TimeSpan.FromSeconds(15);
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("ValheimRcon/1.5.1");
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("ValheimRcon/1.5.2");
             return client;
         }
     }
