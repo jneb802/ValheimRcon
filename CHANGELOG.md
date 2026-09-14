@@ -1,5 +1,9 @@
-### Unreleased
+### 1.5.2
 - Show the online character name with the creator ID in player-built object results
+- Updated player-list and armor-stand handling for Valheim 1.0
+- Fixed player display names in the Valheim 1.0 player list
+- Fixed Discord webhook messages and file uploads
+- Added RCON chat relay support for solo and locally hosted games
 
 ### 1.5.1
 - Added `-zone <x> <y>` parameter to `findObjects` and `deleteObjects` commands for searching/deleting objects by zone coordinates
