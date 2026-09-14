@@ -11,7 +11,8 @@ namespace ValheimRcon.ZDOInfo
 
         public void AppendInfo(ZDO zdo, StringBuilder stringBuilder, bool detailed)
         {
-            stringBuilder.Append($"Creator: {zdo.GetLong(ZDOVars.s_creator)}");
+            long creatorId = zdo.GetLong(ZDOVars.s_creator);
+            stringBuilder.Append($"Creator: {PlayerUtils.GetPlayerNameAndId(creatorId)}");
             var maxHealth = _maxHealth.TryGetValue(zdo.GetPrefab(), out var health) ? health : 0f;
             stringBuilder.Append($" Health: {zdo.GetFloat(ZDOVars.s_health, maxHealth).ToDisplayFormat()}");
 

@@ -38,5 +38,4 @@
   <ItemGroup>
     <ProjectReference Include="../ValheimRcon.csproj" />
   </ItemGroup>
-
 </Project>

@@ -1,3 +1,6 @@
+### Unreleased
+- Show the online character name with the creator ID in player-built object results
+
 ### 1.5.1
 - Added `-zone <x> <y>` parameter to `findObjects` and `deleteObjects` commands for searching/deleting objects by zone coordinates
 - Added `-prefab <prefab name>` option to `modifyObject` command to change object prefab
