@@ -1,204 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="Environment.props" />
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{43D6353E-AE3D-424E-8D9D-B274AB342A3E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net48</TargetFramework>
     <RootNamespace>ValheimRcon</RootNamespace>
     <AssemblyName>ValheimRcon</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <LangVersion>10</LangVersion>
+    <Nullable>disable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>Libs\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="assembly_utils">
-      <HintPath>Libs\assembly_utils.dll</HintPath>
-    </Reference>
-    <Reference Include="assembly_valheim">
-      <HintPath>Libs\assembly_valheim.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>Libs\BepInEx.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx.Harmony">
-      <HintPath>Libs\BepInEx.Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="LukeSkywalker.IPNetwork, Version=1.3.2.0, Culture=neutral, PublicKeyToken=764160545cf0d618, processorArchitecture=MSIL">
-      <HintPath>packages\IPNetwork.1.3.2.0\lib\LukeSkywalker.IPNetwork.dll</HintPath>
-    </Reference>
-    <Reference Include="netstandard">
-      <HintPath>Libs\netstandard.dll</HintPath>
-    </Reference>
-    <Reference Include="Splatform">
-      <HintPath>Libs\Splatform.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="UnityEngine">
-      <HintPath>Libs\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>Libs\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Libs\UnityEngine.UI.dll</HintPath>
-    </Reference>
+    <Compile Remove="Tests/**/*.cs" />
+    <None Remove="Tests/**" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Commands\ActionCommand.cs" />
-    <Compile Include="Commands\Admin\AddAdmin.cs" />
-    <Compile Include="Commands\Admin\DisconnectAll.cs" />
-    <Compile Include="Commands\GlobalKeys\AddGlobalKeyCommand.cs" />
-    <Compile Include="Commands\Admin\AddPermitted.cs" />
-    <Compile Include="Commands\Admin\Ban.cs" />
-    <Compile Include="Commands\CommandArgs.cs" />
-    <Compile Include="Commands\CommandArgsExtensions.cs" />
-    <Compile Include="Commands\CommandResult.cs" />
-    <Compile Include="Commands\Modification\PrefabModification.cs" />
-    <Compile Include="Commands\Players\Damage.cs" />
-    <Compile Include="Commands\DeleteObjects.cs" />
-    <Compile Include="Commands\RandomEvents\CurrentEvent.cs" />
-    <Compile Include="Commands\RandomEvents\EventsList.cs" />
-    <Compile Include="Commands\ExcludeAttribute.cs" />
-    <Compile Include="Commands\FindObjects.cs" />
-    <Compile Include="Commands\Modification\HealthModification.cs" />
-    <Compile Include="Commands\Modification\IZdoModification.cs" />
-    <Compile Include="Commands\Modification\PositionModification.cs" />
-    <Compile Include="Commands\Modification\RotationModification.cs" />
-    <Compile Include="Commands\Modification\TagModification.cs" />
-    <Compile Include="Commands\ModifyObject.cs" />
-    <Compile Include="Commands\Players\FindPlayer.cs" />
-    <Compile Include="Commands\GetServerStats.cs" />
-    <Compile Include="Commands\Players\GiveItem.cs" />
-    <Compile Include="Commands\Players\Heal.cs" />
-    <Compile Include="Commands\InvokeConsoleCommand.cs" />
-    <Compile Include="Commands\IRconCommand.cs" />
-    <Compile Include="Commands\Admin\Kick.cs" />
-    <Compile Include="Commands\ObjectId.cs" />
-    <Compile Include="Commands\Players\PlayerRconCommand.cs" />
-    <Compile Include="Commands\Admin\PrintAdminList.cs" />
-    <Compile Include="Commands\Admin\PrintBanlist.cs" />
-    <Compile Include="Commands\GlobalKeys\PrintGlobalKeysCommand.cs" />
-    <Compile Include="Commands\Admin\PrintPermitlist.cs" />
-    <Compile Include="Commands\RandomEvents\StartEvent.cs" />
-    <Compile Include="Commands\RandomEvents\StopEvent.cs" />
-    <Compile Include="Commands\RconCommand.cs" />
-    <Compile Include="Commands\Admin\RemoveAdmin.cs" />
-    <Compile Include="Commands\GlobalKeys\RemoveGlobalKeyCommand.cs" />
-    <Compile Include="Commands\Admin\RemovePermitted.cs" />
-    <Compile Include="Commands\SayChat.cs" />
-    <Compile Include="Commands\SayPing.cs" />
-    <Compile Include="Commands\Search\ISearchCriteria.cs" />
-    <Compile Include="Commands\Search\PrefabCriteria.cs" />
-    <Compile Include="Commands\Search\CreatorCriteria.cs" />
-    <Compile Include="Commands\Search\IdCriteria.cs" />
-    <Compile Include="Commands\Search\TagCriteria.cs" />
-    <Compile Include="Commands\Search\NearCriteria.cs" />
-    <Compile Include="Commands\Search\OldTagCriteria.cs" />
-    <Compile Include="Commands\Search\ZoneCriteria.cs" />
-    <Compile Include="Commands\ServerLogs.cs" />
-    <Compile Include="Commands\ShowMessage.cs" />
-    <Compile Include="Commands\Container\ContainerRconCommand.cs" />
-    <Compile Include="Commands\Container\ShowContainerInventory.cs" />
-    <Compile Include="Commands\Container\AddItemToContainer.cs" />
-    <Compile Include="Commands\Container\RemoveItemFromContainer.cs" />
-    <Compile Include="Commands\Container\ClearContainerInventory.cs" />
-    <Compile Include="Commands\Container\ContainerUtils.cs" />
-    <Compile Include="Commands\Players\ShowPlayers.cs" />
-    <Compile Include="Commands\SpawnObject.cs" />
-    <Compile Include="Commands\Players\TeleportPlayer.cs" />
-    <Compile Include="Commands\ServerTimeCommand.cs" />
-    <Compile Include="Commands\Admin\Unban.cs" />
-    <Compile Include="Commands\WorldSave.cs" />
-    <Compile Include="Core\AsynchronousSocketListener.cs" />
-    <Compile Include="Core\IRconConnectionManager.cs" />
-    <Compile Include="Core\IRconPeer.cs" />
-    <Compile Include="Core\PacketType.cs" />
-    <Compile Include="Core\RconCommandHandler.cs" />
-    <Compile Include="Core\RconCommandReceiver.cs" />
-    <Compile Include="Core\RconPacket.cs" />
-    <Compile Include="Core\RconPeer.cs" />
-    <Compile Include="Core\SecurityReportHandler.cs" />
-    <Compile Include="Discord.cs" />
-    <Compile Include="DiscordService.cs" />
-    <Compile Include="FormattingUtils.cs" />
-    <Compile Include="Core\IpAddressFilter.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="Core\Incident.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="PlayerUtils.cs" />
-    <Compile Include="Plugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RconCommandsUtil.cs" />
-    <Compile Include="RconProxy.cs" />
-    <Compile Include="ThreadingUtil.cs" />
-    <Compile Include="ZDOInfo\CommonZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\BedZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\BuildingZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\CharacterZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\ContainerZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\CustomZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\GuardStoneZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\ItemDropZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\ArmorStandZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\ItemStandZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\IZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\PortalZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\SignZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\TombStoneZDOInfoProvider.cs" />
-    <Compile Include="ZDOInfo\ZDOInfoProviderBase.cs" />
-    <Compile Include="ZDOInfo\ZDOInfoUtil.cs" />
-    <Compile Include="ZdoUtils.cs" />
+    <PackageReference Include="IPNetwork" Version="1.3.2.0" />
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.44.1" PrivateAssets="all" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="add-custom-command.md" />
-    <None Include="CHANGELOG.md" />
-    <None Include="ILRepack.targets" />
-    <None Include="manifest.json" />
-    <None Include="commands.md" />
-    <None Include="packages.config" />
-    <None Include="README.md" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="CreatePluginPackage.targets" />
-  <Import Project="packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ILRepack.Lib.MSBuild.Task.2.0.44.1\build\ILRepack.Lib.MSBuild.Task.targets'))" />
-  </Target>
+
 </Project>

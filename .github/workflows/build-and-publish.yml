@@ -85,9 +85,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ${{ steps.find-project.outputs.project-path }}
 
-    - name: Restore NuGet packages
-      run: nuget restore ${{ steps.find-project.outputs.project-path }} -SolutionDirectory .
-
     - name: Build project
       run: dotnet build ${{ steps.find-project.outputs.project-path }} --configuration Release --no-restore
 
@@ -111,15 +108,15 @@ jobs:
         # Create temporary directory for package
         New-Item -ItemType Directory -Path "package" -Force
         
-        # Copy DLL from known location
-        $dllPath = "bin\Release\$assemblyName.dll"
-        if (Test-Path $dllPath) {
-          Copy-Item $dllPath "package\$assemblyName.dll"
-          echo "Copied DLL: $assemblyName.dll"
-        } else {
+        # Copy plugin DLL and package dependency DLLs from the build output.
+        $outputPath = "bin\Release"
+        $dllPath = Join-Path $outputPath "$assemblyName.dll"
+        if (!(Test-Path $dllPath)) {
           echo "DLL not found at: $dllPath"
           exit 1
         }
+        Get-ChildItem -Path $outputPath -Filter "*.dll" | Copy-Item -Destination "package\"
+        echo "Copied DLLs from: $outputPath"
         
         # Copy other required files
         Copy-Item "manifest.json" "package\"
