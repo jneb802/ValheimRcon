@@ -178,6 +178,8 @@ findObjects -near 100 50 200 50 -prefab Boar
 findObjects -tag-old battle_boars
 ```
 
+For player-built objects, the result shows the online character name and creator ID, for example `Creator: Ragnar (193029)`. If the character is offline, the result shows only the creator ID.
+
 ### deleteObjects
 Deletes objects matching the provided search criteria (at least one criteria must be provided)  
 **Usage:** `deleteObjects [options]`
