@@ -1,3 +1,7 @@
+### 1.5.3
+- Fixed repeated player-history broadcasts caused by the RCON chat relay reusing a player's ID with conflicting user information
+- Preserved server chat messages while reducing unnecessary network traffic
+
 ### 1.5.2
 - Show the online character name with the creator ID in player-built object results
 - Updated player-list and armor-stand handling for Valheim 1.0
