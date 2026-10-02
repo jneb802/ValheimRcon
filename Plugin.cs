@@ -221,23 +221,19 @@ namespace ValheimRcon
                 if (ZNet.TryGetPlayerByPlatformUserID(CommandsUserInfo.UserId, out _) || __instance.m_players.Count == 0)
                     return;
 
-                var name = ServerChatName.Value;
-                var relaySource = default(ZNet.PlayerInfo);
-                var relayEnabled = EnableSoloChatRelay.Value && TryGetChatRelaySource(__instance.m_players, out relaySource);
-                var userId = CommandsUserInfo.UserId;
-                if (relayEnabled)
-                {
-                    userId = relaySource.m_userInfo.m_id;
-                }
+                string name = ServerChatName.Value;
+                ZNet.PlayerInfo relaySource = default(ZNet.PlayerInfo);
+                bool relayEnabled = EnableSoloChatRelay.Value && TryGetChatRelaySource(__instance.m_players, out relaySource);
 
-                var playerInfo = new ZNet.PlayerInfo
+                ZNet.PlayerInfo playerInfo = new ZNet.PlayerInfo
                 {
                     m_name = name,
-                    m_userInfo = new ZNet.CrossNetworkUserInfo
+                    // A shared platform ID must keep the same user data in player history.
+                    m_userInfo = relayEnabled ? relaySource.m_userInfo : new ZNet.CrossNetworkUserInfo
                     {
                         m_displayName = name,
                         m_serverAssignedDisplayName = name,
-                        m_id = userId,
+                        m_id = CommandsUserInfo.UserId,
                         m_playfabId = string.Empty,
                     },
                 };
