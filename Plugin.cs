@@ -5,6 +5,7 @@ using Splatform;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
@@ -64,7 +65,7 @@ namespace ValheimRcon
             DiscordUrl = Config.Bind("2. Discord", "Webhook url", "", "Discord webhook for sending command results");
             ServerChatName = Config.Bind("3. Chat", "Server name", "Server", "Name of server to display messages sent with rcon command");
             EnableSoloChatRelay = Config.Bind("3. Chat", "Enable solo chat relay", true,
-                "Adds a synthetic character id to the RCON player-list entry so RCON say commands are routed through the server when at least one real player is online. [Server restart required for update]");
+                "Adds a synthetic character id to the RCON player-list entry so RCON say commands are routed through the server when exactly one real player is online. Multiplayer chat already routes through the server. [Server restart required for update]");
 
             DiscordSecurityReportPrefix = Config.Bind("4. Security", "Message prefix", "@here Security alert", "Prefix attached to every security report");
             DiscordSecurityUrl = Config.Bind("4. Security", "Webhook url", "", "Discord webhook for sending security reports");
@@ -237,7 +238,10 @@ namespace ValheimRcon
                         m_playfabId = string.Empty,
                     },
                 };
-                if (relayEnabled)
+                // Multiplayer chat already routes through the server. Keep the source's
+                // full account data, but avoid an extra character for Groups to cache.
+                if (relayEnabled && __instance.m_players.Count(player =>
+                        player.m_characterID != ZDOID.None && player.m_userInfo.m_id.IsValid) == 1)
                 {
                     playerInfo.m_characterID = new ZDOID(ChatRelayPeerId, ChatRelayZdoId);
                 }
@@ -246,7 +250,7 @@ namespace ValheimRcon
 
             private static bool TryGetChatRelaySource(List<ZNet.PlayerInfo> players, out ZNet.PlayerInfo relaySource)
             {
-                foreach (var player in players)
+                foreach (ZNet.PlayerInfo player in players)
                 {
                     if (player.m_characterID != ZDOID.None && player.m_userInfo.m_id.IsValid)
                     {
